@@ -11,22 +11,22 @@ def config(filename='database.ini', section='postgresql'):
         for param in params:
             db[param[0]] = param[1]
     else:
-        raise Exception(f'Section {section} is not found in the {filename} file')
+        raise Exception(f"Section {section} is not found in the {filename} file")
     return db
 
 
-def connect():
+def connect(config_file='database.ini'):
     connection = None
     try:
-        params = config()
+        params = config(config_file)
         connection = psycopg2.connect(**params)
-        conn = connection.cursor()
-        conn.execute('SELECT version()')
-        db_version = conn.fetchone()
-        print(db_version)
-        return conn
+        # cursor = connection.cursor()
+        return connection
     except (Exception, psycopg2.DatabaseError) as error:
-        print(error)
+        print(f"Error: {error}")
+        if connection is not None:
+            connection.close()
+        return None
 
 
 if __name__ == "__main__":
