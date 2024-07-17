@@ -19,12 +19,3 @@ class Rent:
 
     def update_rent(self, member_id, book_id, return_date):
         self.rent.update_rent_db(member_id, book_id, return_date)
-
-
-r = Rent()
-current_data = date.today()
-r.issue_rent(3, 42, 53, current_data, current_data+timedelta(10))
-# print(r.get_all_rent())
-r.delete_rent(53, 42)
-r.issue_rent(3, 2, 3, current_data, current_data+timedelta(10))
-r.update_rent(3, 2, current_data+timedelta(20))

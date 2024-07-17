@@ -15,9 +15,3 @@ class Members:
 
     def delete_member(self, name):
         self.member.delete_members_db(name)
-
-
-mem = Members()
-mem.add_member(1, 'prith', 263587)
-print(mem.get_all_members())
-mem.delete_member('prith')

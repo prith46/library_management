@@ -8,17 +8,17 @@ cursor = conn.cursor()
 class Library:
     def __init__(self):
         cursor.execute('CREATE TABLE IF NOT EXISTS books ('
-                     'book_id INT,'
-                     'title VARCHAR(255),'
-                     'author VARCHAR(255),'
-                     'year INT,'
-                     'isin INT,'
-                     'count INT );')
+                       'book_id INT,'
+                       'title VARCHAR(255),'
+                       'author VARCHAR(255),'
+                       'year INT,'
+                       'isin BIGINT,'
+                       'count INT );')
 
         cursor.execute('CREATE TABLE IF NOT EXISTS members ('
                        'member_id INT,'
                        'name VARCHAR(255),'
-                       'phone INT );')
+                       'phone BIGINT );')
 
         cursor.execute('CREATE TABLE IF NOT EXISTS rent ('
                        'rent_id INT,'
@@ -98,9 +98,3 @@ class Library:
             conn.commit()
         else:
             print("No rent for that book is found")
-
-
-
-
-
-

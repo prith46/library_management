@@ -15,9 +15,3 @@ class Book:
 
     def delete_book(self, title):
         self.books.delete_book_db(title)
-
-
-book = Book()
-book.add_book(11, 'The Alchemist', 'Paulo', 1997, 4834, 7)
-print(book.get_all_books())
-book.delete_book('The Alchemist')
