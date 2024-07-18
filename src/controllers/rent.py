@@ -1,5 +1,4 @@
 from src.models.models import Library
-from datetime import date, timedelta
 
 
 class Rent:
@@ -7,9 +6,14 @@ class Rent:
         self.rent = Library()
 
     def issue_rent(self, rent_id, book_id, member_id, rent_date, return_data):
-        query = (f'INSERT INTO rent (rent_id, member_id, book_id, rent_date, return_date) '
-                 f'VALUES ({rent_id}, {member_id}, {book_id}, \'{rent_date}\', \'{return_data}\');')
-        self.rent.issue_rent_db(query)
+        data = self.rent.get_book(book_id)
+        if data[0] > 0:
+            query = (f'INSERT INTO rent (rent_id, member_id, book_id, rent_date, return_date) '
+                     f'VALUES ({rent_id}, {member_id}, {book_id}, \'{rent_date}\', \'{return_data}\');')
+            self.rent.issue_rent_db(query)
+            self.rent.reduce_book_count(book_id)
+        else:
+            print('Book is not available')
 
     def get_all_rent(self):
         return self.rent.get_all_rent_db()

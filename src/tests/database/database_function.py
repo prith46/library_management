@@ -26,18 +26,14 @@ def execute_test_sql(filename):
                    'rent_date DATE,'
                    'return_date DATE );')
 
-    cursor.execute('TRUNCATE TABLE books')
-    cursor.execute('TRUNCATE TABLE members')
-    cursor.execute('TRUNCATE TABLE rent')
-
-    conn.commit()
     try:
         with open(filename, 'r') as file:
-            # Process file contents
             contents = file.read()
-            print(contents)
+            cursor.execute(contents)
+            conn.commit()
     except OSError as e:
         print(f"Error opening file: {e}")
+
 
 def get_one_data(book_id):
     query = f'SELECT * FROM books WHERE book_id = {book_id};'
@@ -45,10 +41,27 @@ def get_one_data(book_id):
     return cursor.fetchone()
 
 
+def get_one_member_data(member_id):
+    query = f'SELECT * FROM members WHERE member_id = {member_id};'
+    cursor.execute(query)
+    return cursor.fetchone()
 
 
+def get_rent_data(rent_id):
+    query = f'SELECT * FROM rent WHERE rent_id = {rent_id};'
+    cursor.execute(query)
+    return cursor.fetchone()
 
 
+def get_rent_data_member_and_rent(member_id, rent_id):
+    query = f'SELECT * FROM rent WHERE member_id = {member_id} AND rent_id = {rent_id};'
+    cursor.execute(query)
+    return cursor.fetchone()
 
 
+def truncate():
+    cursor.execute('TRUNCATE TABLE books')
+    cursor.execute('TRUNCATE TABLE members')
+    cursor.execute('TRUNCATE TABLE rent')
 
+    conn.commit()

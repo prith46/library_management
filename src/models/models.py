@@ -46,7 +46,6 @@ class Library:
             query = f'DELETE FROM BOOKS WHERE title = \'{title}\';'
             cursor.execute(query)
             conn.commit()
-            print("Book is deleted successfully")
         else:
             print("Book is not available")
 
@@ -63,8 +62,8 @@ class Library:
         query = f'SELECT * FROM members WHERE name = \'{name}\';'
         if query:
             query = f'DELETE FROM members WHERE name = \'{name}\';'
+            cursor.execute(query)
             conn.commit()
-            print("Member is deleted successfully")
         else:
             print("Member is not found")
 
@@ -98,3 +97,20 @@ class Library:
             conn.commit()
         else:
             print("No rent for that book is found")
+
+    def reduce_book_count(self, book_id):
+        query = f'SELECT count FROM books WHERE book_id = {book_id};'
+        cursor.execute(query)
+        if query:
+            value = cursor.fetchone()
+            value = int(value[0])
+            query = f'UPDATE books SET count = {value-1} WHERE book_id = {book_id};'
+            cursor.execute(query)
+            conn.commit()
+        else:
+            print("Error in changing the book count")
+
+    def get_book(self, book_id):
+        query = f'SELECT count FROM books WHERE book_id = {book_id};'
+        cursor.execute(query)
+        return cursor.fetchone()

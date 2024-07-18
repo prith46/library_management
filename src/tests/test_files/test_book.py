@@ -11,7 +11,7 @@ def test_add_book(load_book_test_data):
 
 def test_get_all_books(load_book_test_data):
     data = load_book_test_data.get_all_books()
-    print(data)
+    assert len(data) == 101
 
 
 def test_delete_book(load_book_test_data):
